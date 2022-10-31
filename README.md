@@ -1,8 +1,20 @@
+# Service
+
+API Gateway fronting serverless inference and map image generation APIs
+
+![](https://johnespe-open-lpr-plate-detection-site.s3.amazonaws.com/diagram.png)
+
+# Model
+
+The license plate detection and OCR model
+
+https://github.com/JohnEspenhahn/PyLicensePlateModel
+
 # Deploying
 
-Deploy the model image https://github.com/JohnEspenhahn/PyLicensePlateModel
+Setup CDK: https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html
 
-Populate build.sh from build.template.sh and execute
+Deploy the model image. Then populate build.sh from build.template.sh. Finally execute `./build.sh` to deploy
 
 ## Useful commands
 
