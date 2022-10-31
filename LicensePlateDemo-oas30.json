@@ -1,0 +1,211 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "2022-10-29T06:58:58Z",
+    "title" : "LicensePlateDemo"
+  },
+  "basePath" : "/alpha",
+  "schemes" : [ "https" ],
+  "paths" : {
+    "/map/{latitude}/{longitude}/{size}" : {
+      "get" : {
+        "produces" : [ "image/png" ],
+        "parameters" : [ {
+          "name" : "size",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "Content-Type",
+          "in" : "header",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "Accept",
+          "in" : "header",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "longitude",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "latitude",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200 response",
+            "schema" : {
+              "$ref" : "#/definitions/Empty"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "httpMethod" : "GET",
+          "uri" : "https://maps.googleapis.com/maps/api/staticmap?center={latitude},{longitude}&markers=color:blue%7C{latitude},{longitude}&zoom=15&size={size}x{size}&key=AIzaSyAag10rfBTzxhOa4H--aRmnz0M0zGXHTig",
+          "responses" : {
+            "2\\d{2}" : {
+              "statusCode" : "200",
+              "contentHandling" : "CONVERT_TO_BINARY"
+            }
+          },
+          "requestParameters" : {
+            "integration.request.path.latitude" : "method.request.path.latitude",
+            "integration.request.header.Accept" : "method.request.header.Accept",
+            "integration.request.path.longitude" : "method.request.path.longitude",
+            "integration.request.header.Content-Type" : "method.request.header.Content-Type",
+            "integration.request.path.size" : "method.request.path.size"
+          },
+          "passthroughBehavior" : "when_no_templates",
+          "type" : "http"
+        }
+      },
+      "options" : {
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "latitude",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "longitude",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "size",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200 response",
+            "schema" : {
+              "$ref" : "#/definitions/Empty"
+            },
+            "headers" : {
+              "Access-Control-Allow-Origin" : {
+                "type" : "string"
+              },
+              "Access-Control-Allow-Methods" : {
+                "type" : "string"
+              },
+              "Access-Control-Allow-Headers" : {
+                "type" : "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "responses" : {
+            "default" : {
+              "statusCode" : "200",
+              "responseParameters" : {
+                "method.response.header.Access-Control-Allow-Methods" : "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
+                "method.response.header.Access-Control-Allow-Headers" : "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin" : "'*'"
+              }
+            }
+          },
+          "requestTemplates" : {
+            "application/json" : "{\"statusCode\": 200}"
+          },
+          "passthroughBehavior" : "when_no_match",
+          "type" : "mock"
+        }
+      }
+    },
+    "/model" : {
+      "post" : {
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "200 response",
+            "schema" : {
+              "$ref" : "#/definitions/Empty"
+            },
+            "headers" : {
+              "Access-Control-Allow-Origin" : {
+                "type" : "string"
+              }
+            }
+          },
+          "500" : {
+            "description" : "500 response"
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "credentials" : "arn:aws:iam::944551238448:role/ApiGatewayInvokeEndpoint",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:runtime.sagemaker:path/endpoints/${EndpointName}/invocations",
+          "responses" : {
+            "[^2]\\d{2}" : {
+              "statusCode" : "500"
+            },
+            "2\\d{2}" : {
+              "statusCode" : "200",
+              "responseParameters" : {
+                "method.response.header.Access-Control-Allow-Origin" : "'*'"
+              }
+            }
+          },
+          "passthroughBehavior" : "when_no_match",
+          "type" : "aws"
+        }
+      },
+      "options" : {
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "200 response",
+            "schema" : {
+              "$ref" : "#/definitions/Empty"
+            },
+            "headers" : {
+              "Access-Control-Allow-Origin" : {
+                "type" : "string"
+              },
+              "Access-Control-Allow-Methods" : {
+                "type" : "string"
+              },
+              "Access-Control-Allow-Headers" : {
+                "type" : "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "responses" : {
+            "default" : {
+              "statusCode" : "200",
+              "responseParameters" : {
+                "method.response.header.Access-Control-Allow-Methods" : "'OPTIONS,POST'",
+                "method.response.header.Access-Control-Allow-Headers" : "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin" : "'*'"
+              }
+            }
+          },
+          "requestTemplates" : {
+            "application/json" : "{\"statusCode\": 200}"
+          },
+          "passthroughBehavior" : "when_no_match",
+          "type" : "mock"
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "Empty" : {
+      "type" : "object",
+      "title" : "Empty Schema"
+    }
+  },
+  "x-amazon-apigateway-binary-media-types" : [ "image/avif", "image/webp", "image/apng", "image/svg+xml", "image/*" ]
+}
