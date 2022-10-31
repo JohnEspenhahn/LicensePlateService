@@ -46,7 +46,7 @@
         },
         "x-amazon-apigateway-integration" : {
           "httpMethod" : "GET",
-          "uri" : "https://maps.googleapis.com/maps/api/staticmap?center={latitude},{longitude}&markers=color:blue%7C{latitude},{longitude}&zoom=15&size={size}x{size}&key=AIzaSyAag10rfBTzxhOa4H--aRmnz0M0zGXHTig",
+          "uri" : "https://maps.googleapis.com/maps/api/staticmap?center={latitude},{longitude}&markers=color:blue%7C{latitude},{longitude}&zoom=15&size={size}x{size}&key=${GoogleMapsKey}",
           "responses" : {
             "2\\d{2}" : {
               "statusCode" : "200",
